@@ -58,3 +58,20 @@ link-track.log.conf.time-threshold=800
 
 ### 链路
 [![gwmk9A.png](https://z3.ax1x.com/2021/05/12/gwmk9A.png)](https://imgtu.com/i/gwmk9A)
+
+### 注解**@WebLog**
+注解在请求接口上，即可拦截，方便调试程序
+![](https://i.imgur.com/lkjmzJc.png)
+
+
+## 版本更新
+### 1.1.0-RELEASE 版本更新
+1. 数据生成时间显示
+2. 增加每日访问总量统计
+3. 增加日志打印注解**@WebLog**
+
+### 1.0.1-RELEASE 版本更新
+
+1. 增加链路跟踪显示
+2. 增加接口统计
+3. 增加响应时间统计
