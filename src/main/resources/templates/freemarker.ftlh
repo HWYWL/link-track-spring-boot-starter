@@ -6,8 +6,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="${ctx.contextPath}/static/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="${ctx.contextPath}/static/layui/css/global.css" media="all">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layui/css/global.css" media="all">
     <style>
         .site-doc-icon li {
             width: 222px;
@@ -263,10 +263,10 @@
 </div>
 
 
-<script src="${ctx.contextPath}/static/layui/layui.js" charset="utf-8"></script>
-<script src="${ctx.contextPath}/static/jquery.min.js"></script>
-<script src="${ctx.contextPath}/static/echarts.min.js"></script>
-<script src="${ctx.contextPath}/static/config.js"></script>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script src="/jquery.min.js"></script>
+<script src="/echarts.min.js"></script>
+<script src="/config.js"></script>
 <script >
     $(document).ready(function() {
         var threshold = "${config.timeThreshold}"

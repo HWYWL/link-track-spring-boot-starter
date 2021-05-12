@@ -1,7 +1,7 @@
 # link-track-spring-boot-starter
 链路跟踪，最终项目每个方法的耗时，便于优化。
 
-[![author](https://img.shields.io/badge/author-HWY-red.svg)](https://github.com/HWYWL)  [![Maven Central](https://img.shields.io/badge/link--track--spring--boot--starter-1.1.0--RELEASE-green)](https://search.maven.org/artifact/com.github.hwywl/link-track-spring-boot-starter/1.1.0-RELEASE/jar) [![license 2](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/HWYWL)
+[![author](https://img.shields.io/badge/author-HWY-red.svg)](https://github.com/HWYWL)  [![Maven Central](https://img.shields.io/badge/link--track--spring--boot--starter-1.2.0--RELEASE-green)](https://search.maven.org/artifact/com.github.hwywl/link-track-spring-boot-starter/1.2.0-RELEASE/jar) [![license 2](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/HWYWL)
 
 ### 安装
 **maven**
@@ -13,7 +13,7 @@
 <dependency>
   <groupId>com.github.hwywl</groupId>
   <artifactId>link-track-spring-boot-starter</artifactId>
-  <version>1.1.0-RELEASE</version>
+  <version>1.2.0-RELEASE</version>
 </dependency>
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -26,11 +26,24 @@
 <dependency>
   <groupId>com.github.hwywl</groupId>
   <artifactId>link-track-spring-boot-starter</artifactId>
-  <version>1.1.0-RELEASE</version>
+  <version>1.2.0-RELEASE</version>
 </dependency>
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-freemarker</artifactId>
+</dependency>
+```
+
+**如果Spring Boot是2.4.x以下版本请使用1.1.0-RELEASE**
+```
+<dependency>
+  <groupId>com.github.hwywl</groupId>
+  <artifactId>link-track-spring-boot-starter</artifactId>
+  <version>1.1.0-RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf & freemarker</artifactId>
 </dependency>
 ```
 
@@ -65,6 +78,9 @@ link-track.log.conf.time-threshold=800
 
 
 ## 版本更新
+### 1.2.0-RELEASE 版本更新
+1. 兼容页面支持Spring Boot 2.4.x版本
+
 ### 1.1.0-RELEASE 版本更新
 1. 数据生成时间显示
 2. 增加每日访问总量统计
