@@ -1,6 +1,7 @@
 package com.github.hwywl.linktrack.service;
 
 import com.github.hwywl.linktrack.model.LinkTrackNode;
+import com.github.hwywl.linktrack.utils.DateFormatUtil;
 import com.github.hwywl.linktrack.utils.MethodTypeUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -39,6 +40,11 @@ public class InvokeService {
         parent.setMethodType(MethodTypeUtil.getMethodType(parentClassName));
         parent.setChildren(new ArrayList<>());
 
+        // 获取当前东八区时间
+        String todayCttDate = DateFormatUtil.todayCttDate();
+        parent.setMaxRunCreationTime(todayCttDate);
+        parent.setMinRunCreationTime(todayCttDate);
+
         return parent;
     }
 
@@ -63,6 +69,11 @@ public class InvokeService {
         current.setMinRunTime(runTime);
         current.setChildren(new ArrayList<>());
         current.setMethodType(MethodTypeUtil.getMethodType(pjp));
+
+        // 获取当前东八区时间
+        String todayCttDate = DateFormatUtil.todayCttDate();
+        current.setMaxRunCreationTime(todayCttDate);
+        current.setMinRunCreationTime(todayCttDate);
 
         return current;
     }

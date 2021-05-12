@@ -3,9 +3,10 @@ package com.github.hwywl.linktrack.service;
 import com.github.hwywl.linktrack.model.LinkTrackNode;
 import com.github.hwywl.linktrack.model.SystemStatistic;
 import com.github.hwywl.linktrack.system.Constant;
+import com.github.hwywl.linktrack.system.MethodType;
 import com.github.hwywl.linktrack.utils.CacheUtil;
 import com.github.hwywl.linktrack.utils.GraphMap;
-import com.github.hwywl.linktrack.system.MethodType;
+import com.github.hwywl.linktrack.utils.TimerExpireHashMapUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class RunTimeNodeService {
     /**
      * 添加/更新节点
      *
-     * @param key         方法名称
+     * @param key           方法名称
      * @param linkTrackNode 节点信息
      */
     public static void addOrUpdate(String key, LinkTrackNode linkTrackNode) {
@@ -37,6 +38,11 @@ public class RunTimeNodeService {
             }
             GraphMap.get(key).setMaxRunTime(linkTrackNode.getMaxRunTime() > oldNode.getMaxRunTime() ? linkTrackNode.getMaxRunTime() : oldNode.getMaxRunTime());
             GraphMap.get(key).setMinRunTime(linkTrackNode.getMinRunTime() < oldNode.getMinRunTime() ? linkTrackNode.getMinRunTime() : oldNode.getMinRunTime());
+
+            GraphMap.get(key).setMaxRunCreationTime(linkTrackNode.getMaxRunTime() > oldNode.getMaxRunTime() ? linkTrackNode.getMaxRunCreationTime() :
+                    oldNode.getMaxRunCreationTime());
+            GraphMap.get(key).setMinRunCreationTime(linkTrackNode.getMinRunTime() < oldNode.getMinRunTime() ? linkTrackNode.getMinRunCreationTime() :
+                    oldNode.getMinRunCreationTime());
         } else {
             GraphMap.put(key, linkTrackNode);
         }
@@ -45,7 +51,7 @@ public class RunTimeNodeService {
     /**
      * 添加节点
      *
-     * @param key         方法名称
+     * @param key           方法名称
      * @param linkTrackNode 节点信息
      */
     public static void add(String key, LinkTrackNode linkTrackNode) {
@@ -100,7 +106,7 @@ public class RunTimeNodeService {
     /**
      * 更新子节点数据
      *
-     * @param child                  子节点
+     * @param child                    子节点
      * @param hisLinkTrackNodeChildren
      */
     public static void updateChildren(LinkTrackNode child, List<LinkTrackNode> hisLinkTrackNodeChildren) {
@@ -114,9 +120,11 @@ public class RunTimeNodeService {
                 child.setAvgRunTime(avg);
                 if (hisLinkTrackNodeChild.getMaxRunTime() > child.getMaxRunTime()) {
                     child.setMaxRunTime(hisLinkTrackNodeChild.getMaxRunTime());
+                    child.setMaxRunCreationTime(hisLinkTrackNodeChild.getMaxRunCreationTime());
                 }
                 if (hisLinkTrackNodeChild.getMinRunTime() < child.getMinRunTime()) {
                     child.setMinRunTime(hisLinkTrackNodeChild.getMinRunTime());
+                    child.setMinRunCreationTime(hisLinkTrackNodeChild.getMinRunCreationTime());
                 }
                 hisLinkTrackNodeChildren.set(i, child);
                 break;
@@ -132,26 +140,27 @@ public class RunTimeNodeService {
     public static SystemStatistic getRunStatistic() {
         SystemStatistic systemStatistic = new SystemStatistic();
         List<LinkTrackNode> controllerApis = GraphMap.get(MethodType.Controller);
-        if (null == controllerApis || controllerApis.size() == 0) {
-            return systemStatistic;
+        if (null != controllerApis && controllerApis.size() != 0) {
+            // 计算超过阈值时间的数量
+            int delayNum = (int) controllerApis.stream().filter(controllerApi -> controllerApi.getAvgRunTime() >= Double.parseDouble(CacheUtil.get(Constant.TIME_THRESHOLD_KEY).toString())).count();
+            systemStatistic.setDelayNum(delayNum);
+            // 计算未超过阈值时间的数量
+            int normalNum = (int) controllerApis.stream().filter(controllerApi -> controllerApi.getAvgRunTime() < Double.parseDouble(CacheUtil.get(Constant.TIME_THRESHOLD_KEY).toString())).count();
+            systemStatistic.setNormalNum(normalNum);
+            // 计算总的数量
+            int totalNum = (int) controllerApis.stream().count();
+            systemStatistic.setTotalNum(totalNum);
+            Double max = controllerApis.stream().map(LinkTrackNode::getMaxRunTime).max(Double::compareTo).get();
+            Double min = controllerApis.stream().map(LinkTrackNode::getMinRunTime).min(Double::compareTo).get();
+            Double avg = controllerApis.stream().map(LinkTrackNode::getAvgRunTime).collect(Collectors.averagingDouble(Double::doubleValue));
+            BigDecimal bg = new BigDecimal(avg);
+            avg = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            systemStatistic.setMaxRunTime(max);
+            systemStatistic.setMinRunTime(min);
+            systemStatistic.setAvgRunTime(avg);
         }
-        // 计算超过阈值时间的数量
-        int delayNum = (int) controllerApis.stream().filter(controllerApi -> controllerApi.getAvgRunTime() >= Double.parseDouble(CacheUtil.get(Constant.TIME_THRESHOLD_KEY).toString())).count();
-        systemStatistic.setDelayNum(delayNum);
-        // 计算未超过阈值时间的数量
-        int normalNum = (int) controllerApis.stream().filter(controllerApi -> controllerApi.getAvgRunTime() < Double.parseDouble(CacheUtil.get(Constant.TIME_THRESHOLD_KEY).toString())).count();
-        systemStatistic.setNormalNum(normalNum);
-        // 计算总的数量
-        int totalNum = (int) controllerApis.stream().count();
-        systemStatistic.setTotalNum(totalNum);
-        Double max = controllerApis.stream().map(LinkTrackNode::getAvgRunTime).max(Double::compareTo).get();
-        Double min = controllerApis.stream().map(LinkTrackNode::getAvgRunTime).min(Double::compareTo).get();
-        Double avg = controllerApis.stream().map(LinkTrackNode::getAvgRunTime).collect(Collectors.averagingDouble(Double::doubleValue));
-        BigDecimal bg = new BigDecimal(avg);
-        avg = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        systemStatistic.setMaxRunTime(max);
-        systemStatistic.setMinRunTime(min);
-        systemStatistic.setAvgRunTime(avg);
+        systemStatistic.setNormalStatistics(TimerExpireHashMapUtil.selectCache(Constant.NORMAL_STATISTICS_KEY));
+        systemStatistic.setDelayStatistics(TimerExpireHashMapUtil.selectCache(Constant.DELAY_STATISTICS_KEY));
 
         return systemStatistic;
     }

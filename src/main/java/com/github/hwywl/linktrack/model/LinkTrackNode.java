@@ -50,6 +50,16 @@ public class LinkTrackNode implements Comparable<LinkTrackNode> {
     private MethodType methodType;
 
     /**
+     * 最小耗时产生的时间
+     */
+    private String minRunCreationTime = null;
+
+    /**
+     * 最大耗时产生的时间
+     */
+    private String maxRunCreationTime = null;
+
+    /**
      * 子节点
      */
     private List<LinkTrackNode> children;
@@ -129,6 +139,22 @@ public class LinkTrackNode implements Comparable<LinkTrackNode> {
         return methodType;
     }
 
+    public String getMinRunCreationTime() {
+        return minRunCreationTime;
+    }
+
+    public void setMinRunCreationTime(String minRunCreationTime) {
+        this.minRunCreationTime = minRunCreationTime;
+    }
+
+    public String getMaxRunCreationTime() {
+        return maxRunCreationTime;
+    }
+
+    public void setMaxRunCreationTime(String maxRunCreationTime) {
+        this.maxRunCreationTime = maxRunCreationTime;
+    }
+
     public void setMethodType(MethodType methodType) {
         this.methodType = methodType;
     }
@@ -161,7 +187,7 @@ public class LinkTrackNode implements Comparable<LinkTrackNode> {
 
     @Override
     public String toString() {
-        return "RunTimeNode{" +
+        return "LinkTrackNode{" +
                 "name='" + name + '\'' +
                 ", className='" + className + '\'' +
                 ", methodName='" + methodName + '\'' +
@@ -171,6 +197,8 @@ public class LinkTrackNode implements Comparable<LinkTrackNode> {
                 ", value=" + value +
                 ", avgRunTimeUnit='" + avgRunTimeUnit + '\'' +
                 ", methodType=" + methodType +
+                ", mixRunCreationTime='" + minRunCreationTime + '\'' +
+                ", maxRunCreationTime='" + maxRunCreationTime + '\'' +
                 ", children=" + children +
                 '}';
     }

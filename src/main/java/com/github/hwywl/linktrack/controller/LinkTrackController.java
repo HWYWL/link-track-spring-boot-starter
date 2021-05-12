@@ -38,12 +38,8 @@ public class LinkTrackController {
         SystemStatistic system = RunTimeNodeService.getRunStatistic();
         mv.addObject("system", system);
         mv.addObject("config", CacheUtil.getCache());
-        String template = "index-freemarker";
-        if ("thymeleaf".equals(linkTrackConfig.getShowTemplate())) {
-            template = "index-thymeleaf";
-        }
+        mv.setViewName(linkTrackConfig.getShowTemplate());
 
-        mv.setViewName(template);
         return mv;
     }
 

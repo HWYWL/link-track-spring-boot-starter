@@ -15,4 +15,13 @@ public class Constant {
      * 线程耗时时间阈值
      */
     public final static String TIME_THRESHOLD_KEY = "timeThreshold";
+
+    /**
+     * 正常响应key
+     */
+    public final static String NORMAL_STATISTICS_KEY = "normalStatistics";
+    /**
+     * 延迟响应key
+     */
+    public final static String DELAY_STATISTICS_KEY = "delayStatistics";
 }

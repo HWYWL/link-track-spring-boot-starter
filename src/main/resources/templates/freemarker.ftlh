@@ -197,10 +197,53 @@
                     </div>
                 </div>
             </div>
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>请求统计</legend>
+            </fieldset>
+
+            <div class="layuimini-main layui-top-box">
+                <div class="layui-row layui-col-space10">
+
+                    <div class="layui-col-md3">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="layui-card top-panel layui-bg-gray">
+                                <div class="layui-card-header">正常响应统计</div>
+                                <div class="layui-card-body">
+                                    <div class="layui-row layui-col-space5">
+                                        <div class="layui-col-xs7 layui-col-md7 top-panel-number">${system.normalStatistics.todayStatistics}</div>
+                                        <div class="layui-col-xs5 layui-col-md5 top-panel-tips">
+                                            昨天 <a style="color: deeppink">${system.normalStatistics.yesterdayStatistics}</a><br>
+                                            前天 <a style="color: deeppink">${system.normalStatistics.theDayBeforeYesterdayStatistics}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md3">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="layui-card top-panel layui-bg-gray">
+                                <div class="layui-card-header">延迟响应统计</div>
+                                <div class="layui-card-body">
+                                    <div class="layui-row layui-col-space5">
+                                        <div class="layui-col-xs7 layui-col-md7 top-panel-number">${system.delayStatistics.todayStatistics}</div>
+                                        <div class="layui-col-xs5 layui-col-md5 top-panel-tips">
+                                            昨天 <a style="color: deeppink">${system.delayStatistics.yesterdayStatistics}</a><br>
+                                            前天 <a style="color: deeppink">${system.delayStatistics.theDayBeforeYesterdayStatistics}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="layui-tab-item">
-            <div class="layui-collapse" lay-filter="test">
+            <div class="layui-collapse" lay-filter="linkLayer">
                 <#list list as runtime>
                 <div class="layui-colla-item" >
                     <h2 class="layui-colla-title" id="${runtime.className}.${runtime.methodName}">
@@ -229,9 +272,8 @@
         var threshold = "${config.timeThreshold}"
         layui.use(['element', 'layer'], function () {
             var element = layui.element;
-            var layer = layui.layer;
 
-            element.on('collapse(test)', function (data) {
+            element.on('collapse(linkLayer)', function (data) {
                 id = data.title['0'].id
                 show(data.content['0'],id)
             });

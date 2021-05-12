@@ -1,5 +1,5 @@
-function getOption(data,threshold){
-    return  {
+function getOption(data, threshold) {
+    return {
         tooltip: {
             trigger: 'item',
             triggerOn: 'mousemove'
@@ -21,22 +21,22 @@ function getOption(data,threshold){
 
                 label: {
                     position: 'right',
-                    formatter: function(params){
+                    formatter: function (params) {
                         var bg = "titleBgGreen"
-                        if (params.value>threshold) {
+                        if (params.value > threshold) {
                             bg = "titleBgRed"
                         }
                         return [
-                            '{'+bg+'|  指标}',
-                            '  {aa|}方法：'+params.name+" ",
+                            '{' + bg + '|  指标}',
+                            '  {aa|}方法：' + params.name + " ",
                             '{hr|}',
-                            '  {aa|}类型： '+params.data.methodType+" ",
+                            '  {aa|}类型： ' + params.data.methodType + " ",
                             '{hr|}',
-                            '  {aa|}平均耗时： '+params.data.avgRunTime+" ms ",
+                            '  {aa|}平均耗时： ' + params.data.avgRunTime + " ms ",
                             '{hr|}',
-                            '  {aa|}最大耗时： '+params.data.maxRunTime+" ms ",
+                            '  {aa|}最大耗时： ' + params.data.maxRunTime + " ms " + '产生时间： ' + params.data.maxRunCreationTime + " ",
                             '{hr|}',
-                            '  {aa|}最小耗时： '+params.data.minRunTime+" ms "
+                            '  {aa|}最小耗时： ' + params.data.minRunTime + " ms " + '产生时间： ' + params.data.minRunCreationTime + " "
                         ].join('\n');
                     },
                     backgroundColor: '#ddd',

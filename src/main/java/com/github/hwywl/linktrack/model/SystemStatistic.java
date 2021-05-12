@@ -23,6 +23,31 @@ public class SystemStatistic {
      */
     private Integer normalNum = 0;
 
+    /**
+     * 正常响应
+     */
+    private ResponseStatistics normalStatistics;
+    /**
+     * 延迟响应
+     */
+    private ResponseStatistics delayStatistics;
+
+    public ResponseStatistics getNormalStatistics() {
+        return normalStatistics;
+    }
+
+    public void setNormalStatistics(ResponseStatistics normalStatistics) {
+        this.normalStatistics = normalStatistics;
+    }
+
+    public ResponseStatistics getDelayStatistics() {
+        return delayStatistics;
+    }
+
+    public void setDelayStatistics(ResponseStatistics delayStatistics) {
+        this.delayStatistics = delayStatistics;
+    }
+
     public String getName() {
         return name;
     }

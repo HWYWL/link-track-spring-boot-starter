@@ -1,7 +1,7 @@
 package com.github.hwywl.linktrack.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.github.hwywl.linktrack.annotation.WebLog;
-import org.apache.tomcat.util.buf.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -50,7 +50,7 @@ public class WebLogAspect {
         log.info("HTTP METHOD : " + request.getMethod());
         log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         log.info("Params参数 : " + Arrays.toString(joinPoint.getArgs()));
-        log.info("Body参数 : " + parameterMap);
+        log.info("Body参数 : " + JSON.toJSONString(parameterMap));
     }
 
     /**

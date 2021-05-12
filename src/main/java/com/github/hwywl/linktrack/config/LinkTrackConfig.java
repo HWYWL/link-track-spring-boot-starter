@@ -19,7 +19,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "link-track.log.conf")
 public class LinkTrackConfig {
     /**
-     * 接口耗时阈值
+     * 接口耗时阈值(ms)
      */
     Double timeThreshold = 500.0;
     /**
@@ -27,7 +27,7 @@ public class LinkTrackConfig {
      */
     String pointcut = "execution(* com.github.hwywl.linktrack.controller..*(..))}";
     /**
-     * 前端模板引擎
+     * 前端模板引擎：thymeleaf、freemarker，默认为：thymeleaf
      */
     String showTemplate = "thymeleaf";
 
